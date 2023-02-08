@@ -19,9 +19,11 @@ import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import Products from '../../components/Products/Products';
+import { useRouter } from 'next/router';
 
 function Copyright(props: any) {
   return (
@@ -94,6 +96,8 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 const cms = () => {
+  const router = useRouter();
+
   const [open, setOpen] = useState<boolean>(true);
 
   const toggleDrawer = () => {
@@ -156,15 +160,26 @@ const cms = () => {
                 <ListItemText primary="All Products" />
               </ListItemButton>
 
-              <ListItemButton>
+              <ListItemButton
+                onClick={() => router.push(`/cms/product/create/`)}
+              >
                 <ListItemIcon>
                   <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Create New Product" />
               </ListItemButton>
+
+              <ListItemButton
+                onClick={() => router.push(`/cms/product/create/`)}
+              >
+                <ListItemIcon>
+                  <DeleteForeverIcon />
+                </ListItemIcon>
+                <ListItemText primary="Delete Selected" />
+              </ListItemButton>
             </>
           </List>
-        </Drawer>{' '}
+        </Drawer>
         <Box
           component="main"
           sx={{

@@ -1,13 +1,19 @@
-import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridRowParams,
+  GridSelectionModel,
+} from '@mui/x-data-grid';
 import { QueryClient, dehydrate, useQuery } from 'react-query';
 import { GetServerSideProps } from 'next';
 import { getProducts } from '../../utils/productQueries';
 import { ProductType } from '../../types/ProductType';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery('posts', getProducts);
+  await queryClient.prefetchQuery('products', getProducts);
 
   return {
     props: { dehydratedState: dehydrate(queryClient) },
@@ -34,6 +40,7 @@ const Populate = (product: ProductType, rows: any[]) => {
 export default function Products() {
   const { data } = useQuery('products', getProducts);
   const router = useRouter();
+  const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
   const rows: GridColDef[] = [];
 
@@ -47,8 +54,12 @@ export default function Products() {
     <div style={{ height: 450, width: '100%', cursor: 'pointer' }}>
       <DataGrid
         onRowClick={handleClick}
+        onSelectionModelChange={(newSelectionModel) => {
+          setSelectionModel(newSelectionModel);
+        }}
+        selectionModel={selectionModel}
         disableSelectionOnClick
-        checkboxSelection={true}
+        checkboxSelection
         rows={rows}
         columns={columns}
       />

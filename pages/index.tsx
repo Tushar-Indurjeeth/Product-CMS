@@ -18,7 +18,7 @@ import { Item } from '../components/Item/Item';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery('posts', getProducts);
+  await queryClient.prefetchQuery('products', getProducts);
 
   return {
     props: { dehydratedState: dehydrate(queryClient) },

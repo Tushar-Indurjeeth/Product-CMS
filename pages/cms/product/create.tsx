@@ -7,13 +7,12 @@ import { createProduct } from '../../../utils/productQueries';
 import { CreateProductType } from '../../../types/ProductType';
 import { Wrapper } from '../../../styles/create.styles';
 import { useRouter } from 'next/router';
-import { Divider, Drawer, IconButton, List, Toolbar } from '@mui/material';
-import { mainListItems } from '../../../components/ListItems/listItems';
-
-import AddIcon from '@mui/icons-material/Add';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 export default function Create() {
   const router = useRouter();
+  const MySwal = withReactContent(Swal);
 
   const initialValues: CreateProductType = {
     category: '',
@@ -34,12 +33,22 @@ export default function Create() {
   };
 
   const { mutate } = useMutation(createProduct, {
-    onSuccess: (data, variables, context) => {
-      console.log('success');
+    onSuccess: () => {
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Product Created!',
+      }).then(() => {
+        router.push('/cms');
+      });
     },
 
-    onError: (error, variables, context) => {
-      console.error('NOT CREATED');
+    onError: () => {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Failed to update!',
+      });
     },
   });
 
@@ -49,81 +58,79 @@ export default function Create() {
   };
 
   return (
-    <>
-      <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-        }}
-        autoComplete="off"
-        onSubmit={CreateProduct}
-      >
-        <Wrapper>
-          <h1>Create Product</h1>
-          <TextField
-            required
-            fullWidth
-            id="title"
-            name="title"
-            label="Title"
-            value={values.title}
-            onChange={handleInputChange}
-          />
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      autoComplete="off"
+      onSubmit={CreateProduct}
+    >
+      <Wrapper>
+        <h1>Create Product</h1>
+        <TextField
+          required
+          fullWidth
+          id="title"
+          name="title"
+          label="Title"
+          value={values.title}
+          onChange={handleInputChange}
+        />
 
-          <TextField
-            required
-            id="category"
-            name="category"
-            label="Category"
-            value={values.category}
-            onChange={handleInputChange}
-          />
+        <TextField
+          required
+          id="category"
+          name="category"
+          label="Category"
+          value={values.category}
+          onChange={handleInputChange}
+        />
 
-          <TextField
-            required
-            id="price"
-            name="price"
-            label="Price"
-            type="number"
-            value={values.price}
-            onChange={handleInputChange}
-          />
+        <TextField
+          required
+          id="price"
+          name="price"
+          label="Price"
+          type="number"
+          value={values.price}
+          onChange={handleInputChange}
+        />
 
-          <TextField
-            required
-            id="description"
-            name="description"
-            label="Description"
-            onChange={handleInputChange}
-            value={values.description}
-            multiline
-            maxRows={4}
-          />
+        <TextField
+          required
+          id="description"
+          name="description"
+          label="Description"
+          onChange={handleInputChange}
+          value={values.description}
+          multiline
+          maxRows={4}
+        />
 
-          <TextField
-            required
-            id="image"
-            name="image"
-            label="Image URL"
-            type="string"
-            onChange={handleInputChange}
-            value={values.image}
-          />
-          <div>
-            <Button type="submit" variant="contained">
-              Create product
-            </Button>
+        <TextField
+          required
+          id="image"
+          name="image"
+          label="Image URL"
+          type="string"
+          onChange={handleInputChange}
+          value={values.image}
+        />
+        <div>
+          <Button type="submit" variant="contained">
+            Create product
+          </Button>
 
-            <Button
-              variant="contained"
-              color="error"
-              onClick={() => router.push(`/cms/`)}
-            >
-              Cancel
-            </Button>
-          </div>
-        </Wrapper>
-      </Box>{' '}
-    </>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => router.push(`/cms/`)}
+          >
+            Cancel
+          </Button>
+        </div>
+      </Wrapper>
+    </Box>
   );
 }
