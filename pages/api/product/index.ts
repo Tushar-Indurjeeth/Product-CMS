@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import clientPromise from '../../../lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { ObjectIdLike } from 'bson';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -34,20 +33,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
     if (req.method === 'DELETE') {
-      const objIds: ObjectId[] = req.body.ids.map(
-        (id: string) => new ObjectId(id)
-      );
+      const objIds: ObjectId[] = req.body.map((id: string) => new ObjectId(id));
 
       const deletedProducts = await productsCollection.deleteMany({
         _id: { $in: objIds },
       });
 
       if (deletedProducts.deletedCount === objIds.length) {
-        return res
+        res
           .status(200)
           .json({ deletedProducts, message: 'Successfully deleted' });
+        return res.end();
       } else {
-        return res.status(404).send({ error: 'Product not found' });
+        res.status(404).json({ error: 'Failed to delete' });
+        return res.end();
       }
     }
   } catch (e) {

@@ -31,3 +31,18 @@ export const updateProduct = async ({
   })
     .then((response) => response.json)
     .catch((err) => console.error(err));
+
+type DeleteProductsProp = {
+  ids: string[];
+};
+
+export const deleteProducts = async ({
+  ids,
+}: DeleteProductsProp): Promise<any> =>
+  await fetch(`http://localhost:3000/api/product/`, {
+    body: JSON.stringify(ids),
+    headers: { 'content-type': 'application/json' },
+    method: 'DELETE',
+  })
+    .then((response) => response.json)
+    .catch((err) => console.error(err));

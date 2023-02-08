@@ -16,14 +16,54 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
+import {
+  DataGrid,
+  GridColDef,
+  GridRowParams,
+  GridSelectionModel,
+} from '@mui/x-data-grid';
+
 import AddIcon from '@mui/icons-material/Add';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import Products from '../../components/Products/Products';
 import { useRouter } from 'next/router';
+import { deleteProducts } from '../../utils/productQueries';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+
+import { QueryClient, dehydrate, useQuery, useMutation } from 'react-query';
+import { GetServerSideProps } from 'next';
+import { getProducts } from '../../utils/productQueries';
+import { ProductType } from '../../types/ProductType';
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery('products', getProducts);
+
+  return {
+    props: { dehydratedState: dehydrate(queryClient) },
+  };
+};
+
+const columns: GridColDef[] = [
+  { field: 'col1', headerName: 'Title', width: 400 },
+  { field: 'col2', headerName: 'Category', width: 150 },
+  { field: 'col3', headerName: 'Description', width: 270 },
+  { field: 'col4', headerName: 'Price($)', width: 70 },
+];
+
+const Populate = (product: ProductType, rows: any[]) => {
+  rows.push({
+    id: product._id,
+    col1: product.title,
+    col2: product.category,
+    col3: product.description,
+    col4: product.price,
+  });
+};
 
 function Copyright(props: any) {
   return (
@@ -97,11 +137,69 @@ const mdTheme = createTheme();
 
 const cms = () => {
   const router = useRouter();
+  const MySwal = withReactContent(Swal);
+  const { data } = useQuery('products', getProducts);
 
   const [open, setOpen] = useState<boolean>(true);
+  const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const { mutate } = useMutation(deleteProducts, {
+    onSuccess: () => {
+      MySwal.fire('Deleted!', 'Successfully deleted', 'success').then(() => {
+        router.push('/cms');
+      });
+    },
+
+    onError: () => {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Failed to delete!',
+      });
+    },
+  });
+
+  const DeleteProducts = (e: any) => {
+    e.preventDefault();
+
+    if (selectionModel.length < 1) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No products selected!',
+      });
+    } else {
+      MySwal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          mutate({ ids: selectionModel as string[] });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          MySwal.fire('Cancelled', 'NOT deleted!', 'error');
+        }
+      });
+    }
+  };
+
+  const rows: GridColDef[] = [];
+
+  data?.map((product: ProductType) => Populate(product, rows));
+
+  const handleClick = (e: GridRowParams) => {
+    router.push(`cms/product/${e.id}`);
   };
 
   return (
@@ -169,9 +267,7 @@ const cms = () => {
                 <ListItemText primary="Create New Product" />
               </ListItemButton>
 
-              <ListItemButton
-                onClick={() => router.push(`/cms/product/create/`)}
-              >
+              <ListItemButton onClick={DeleteProducts}>
                 <ListItemIcon>
                   <DeleteForeverIcon />
                 </ListItemIcon>
@@ -198,7 +294,21 @@ const cms = () => {
               {/* Current Products */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Products />
+                  <div
+                    style={{ height: 450, width: '100%', cursor: 'pointer' }}
+                  >
+                    <DataGrid
+                      onRowClick={handleClick}
+                      onSelectionModelChange={(newSelectionModel) => {
+                        setSelectionModel(newSelectionModel);
+                      }}
+                      selectionModel={selectionModel}
+                      disableSelectionOnClick
+                      checkboxSelection
+                      rows={rows}
+                      columns={columns}
+                    />
+                  </div>
                 </Paper>
               </Grid>
             </Grid>

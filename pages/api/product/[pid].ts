@@ -25,20 +25,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
 
-    // if (req.method === 'DELETE') {
-    //   const product = await products.deleteOne({
-    //     _id: new ObjectId(pid),
-    //   });
-
-    //   if (product.deletedCount > 0) {
-    //     return res
-    //       .status(200)
-    //       .json({ product, message: 'Successfully deleted' });
-    //   } else {
-    //     return res.status(404).send({ error: 'Product not found' });
-    //   }
-    // }
-
     if (req.method === 'PUT') {
       const product = await products.updateOne(
         { _id: new ObjectId(pid) },

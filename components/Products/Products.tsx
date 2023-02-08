@@ -40,7 +40,10 @@ const Populate = (product: ProductType, rows: any[]) => {
 export default function Products() {
   const { data } = useQuery('products', getProducts);
   const router = useRouter();
-  const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+
+  const [selectionModel, setSelectionModel] = useContext<GridSelectionModel>(
+    []
+  );
 
   const rows: GridColDef[] = [];
 
