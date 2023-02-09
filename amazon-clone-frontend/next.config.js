@@ -1,5 +1,14 @@
 module.exports = {
+  // images: {
+  //   domains: ['fakestoreapi.com'],
+  // },
+
   images: {
-    domains: ['fakestoreapi.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
 };
