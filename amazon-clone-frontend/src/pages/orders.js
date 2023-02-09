@@ -5,6 +5,9 @@ import Header from '../components/Header';
 function Orders() {
   return (
     <div>
+      <Head>
+        <link rel="icon" href="/images/logo.svg" />
+      </Head>
       <Header />
 
       <main className="max-w-screen-lg mx-auto p-10">
