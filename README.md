@@ -4,7 +4,7 @@ A Product CMS with a front-end built using [NextJs](https://nextjs.org/). Please
 
 ## Product CMS
 
-[README.md](https://github.com/Tushar-Indurjeeth/Product-CMS/blob/261c58735283f267e78bd029c859552f726a9d5d/cms/README.md)
+[README.md](https://github.com/Tushar-Indurjeeth/Product-CMS/blob/a2f0dc5bc04f44ae9bfd017a4d0f8e75ed08c1c5/cms/README.md)
 
 ## Amazon-clone-frontend
 
