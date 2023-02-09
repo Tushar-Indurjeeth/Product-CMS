@@ -1,29 +1,29 @@
-# Redux Toolkit example
+# Amazon Clone Frontend
 
-This example shows how to integrate Next.js with [Redux Toolkit](https://redux-toolkit.js.org).
+## Live demo
 
-The **Redux Toolkit** is intended to be the standard way to write Redux logic (create actions and reducers, setup the store with some default middlewares like redux devtools extension). This example demonstrates each of these features with Next.js
+[https://product-cms-cmp3.vercel.app/](https://product-cms-cmp3.vercel.app/)
 
-## Deploy your own
+## How it works
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+- The data is pulled through from the API Endpoint setup in the Product CMS.
+- Pages are sever side rendered.
+- Can add items to cart.
+- Redux is used to keep track of amount of items in the cart.
+- Can view all items in cart by clicking the cart icon in the top right corner.
+- Ability to sign in & checkout are under development and will be added in the future.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-redux-toolkit&project-name=with-redux-toolkit&repository-name=with-redux-toolkit)
+## Built using
 
-## How to use
+- [NextJs](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Redux](https://redux-toolkit.js.org/)
+- [Hero Icons](https://v1.heroicons.com/)
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+## Platform
 
-```bash
-npx create-next-app --example with-redux-toolkit with-redux-toolkit-app
-# or
-yarn create next-app --example with-redux-toolkit with-redux-toolkit-app
-```
+Hosted through [Vercel](https://vercel.com/).
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## License
 
-### TypeScript Setup (optional)
-
-If you haven't already added [TypeScript](https://www.typescriptlang.org/) to your project, follow the [steps in the Next.js documentation](https://nextjs.org/docs/basic-features/typescript). If you are new to TypeScript, go through the Next.js [learning lesson on TypeScript](https://nextjs.org/learn/excel/TypeScript).
-
-Once TypeScript is added, follow the instructions given on the Redux Toolkit [documentation](https://redux-toolkit.js.org/tutorials/TypeScript) to set up and use Redux Toolkit and React-Redux with TypeScript
+Code released under the [MIT License](https://github.com/Tushar-Indurjeeth/Product-CMS/blob/5cd1bb6f1fcde27c2c22835399d119839c062a00/LICENSE).
