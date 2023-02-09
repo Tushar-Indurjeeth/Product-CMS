@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { selectItems } from '../slices/cartSlice';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 function Header() {
   const items = useSelector(selectItems);
@@ -38,13 +39,19 @@ function Header() {
         {/* Right */}
         <div className="flex items-center text-xs text-white space-x-6 mx-6 whitespace-nowrap">
           <div className="cursor-pointer link">
-            <p className="hover:underline">Sign In</p>
-            <p className="font-extrabold md:text-sm">Account & Lists</p>
+            <Link href="/maintenance" className="hover:underline">
+              Sign In
+            </Link>
+            <Link href="/maintenance">
+              <p className="font-extrabold md:text-sm">Account & Lists</p>
+            </Link>
           </div>
 
           <div className="cursor-pointer link">
-            <p>Returns</p>
-            <p className="font-extrabold md:text-sm">& Orders</p>
+            <Link href="/maintenance">
+              <p>Returns</p>
+              <p className="font-extrabold md:text-sm">& Orders</p>
+            </Link>
           </div>
 
           <div
@@ -65,18 +72,36 @@ function Header() {
 
       {/* Bottom */}
       <div className="flex items-center space-x-3 p-2 pl-6 bg-amazon_blue-light text-white text-sm">
-        <p className="link flex items-center">
+        <Link href="/maintenance" className="link flex items-center">
           <MenuIcon className="h-6 mr-1" /> All
-        </p>
-        <p className="link">Prime Video</p>
-        <p className="link">Amazon Business</p>
-        <p className="link">Today's Deals</p>
-        <p className="link hidden lg:inline-flex">Electronics</p>
-        <p className="link hidden lg:inline-flex">Food & Grocery</p>
-        <p className="link hidden lg:inline-flex">Prime</p>
-        <p className="link hidden lg:inline-flex">Buy Again</p>
-        <p className="link hidden lg:inline-flex">Shopper Toolkit</p>
-        <p className="link hidden lg:inline-flex">Health & Personal Care</p>
+        </Link>
+        <Link href="/maintenance" className="link">
+          Prime Video
+        </Link>
+        <Link href="/maintenance" className="link">
+          Amazon Business
+        </Link>
+        <Link href="/maintenance" className="link">
+          Today's Deals
+        </Link>
+        <Link href="/maintenance" className="link hidden lg:inline-flex">
+          Electronics
+        </Link>
+        <Link href="/maintenance" className="link hidden lg:inline-flex">
+          Food & Grocery
+        </Link>
+        <Link href="/maintenance" className="link hidden lg:inline-flex">
+          Prime
+        </Link>
+        <Link href="/maintenance" className="link hidden lg:inline-flex">
+          Buy Again
+        </Link>
+        <Link href="/maintenance" className="link hidden lg:inline-flex">
+          Shopper Toolkit
+        </Link>
+        <Link href="/maintenance" className="link hidden lg:inline-flex">
+          Health & Personal Care
+        </Link>
       </div>
     </header>
   );
