@@ -3,11 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { ChangeEvent, useState } from 'react';
 import { QueryClient, useMutation } from 'react-query';
-import {
-  createProduct,
-  getProduct,
-  updateProduct,
-} from '../../../utils/productQueries';
+import { getProduct, updateProduct } from '../../../utils/productQueries';
 import { CreateProductType, ProductType } from '../../../types/ProductType';
 import { Wrapper } from '../../../styles/create.styles';
 import { useRouter } from 'next/router';
@@ -85,7 +81,7 @@ export default function Update({ product }: Props) {
         text: 'Please change 1 or more values to update the product information',
       });
     } else {
-      mutate({ product: values, id: product._id });
+      mutate({ product: values, id: product._id.toString() });
     }
   };
 

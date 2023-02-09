@@ -1,13 +1,15 @@
 import { CreateProductType, ProductType } from '../types/ProductType';
 
 export const getProducts = async (): Promise<ProductType[]> =>
-  await (await fetch('http://localhost:3000/api/product/')).json();
+  await (await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/product/`)).json();
 
 export const getProduct = async (id: string): Promise<ProductType> =>
-  await (await fetch(`http://localhost:3000/api/product/${id}`)).json();
+  await (
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/product/${id}`)
+  ).json();
 
 export const createProduct = async (product: CreateProductType): Promise<any> =>
-  await fetch('http://localhost:3000/api/product/', {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/product/`, {
     body: JSON.stringify(product),
     headers: { 'content-type': 'application/json' },
     method: 'POST',
@@ -24,7 +26,7 @@ export const updateProduct = async ({
   product,
   id,
 }: UpdateProductProps): Promise<any> =>
-  await fetch(`http://localhost:3000/api/product/${id}`, {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/product/${id}`, {
     body: JSON.stringify(product),
     headers: { 'content-type': 'application/json' },
     method: 'PUT',
@@ -39,7 +41,7 @@ type DeleteProductsProp = {
 export const deleteProducts = async ({
   ids,
 }: DeleteProductsProp): Promise<any> =>
-  await fetch(`http://localhost:3000/api/product/`, {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/product/`, {
     body: JSON.stringify(ids),
     headers: { 'content-type': 'application/json' },
     method: 'DELETE',
