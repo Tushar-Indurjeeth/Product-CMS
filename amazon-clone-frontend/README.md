@@ -1,9 +1,5 @@
 # Amazon Clone Frontend
 
-## Live demo
-
-[https://product-cms-cmp3.vercel.app/](https://product-cms-cmp3.vercel.app/)
-
 ## How it works
 
 - The data is pulled through from the API Endpoint setup in the Product CMS.
@@ -19,10 +15,6 @@
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Redux](https://redux-toolkit.js.org/)
 - [Hero Icons](https://v1.heroicons.com/)
-
-## Platform
-
-Hosted through [Vercel](https://vercel.com/).
 
 ## License
 
